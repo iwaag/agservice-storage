@@ -129,11 +129,6 @@ def create_presigned_download_url(
         Params=params,
         ExpiresIn=option.expires_in,
     )
-    with httpx.Client() as client:
-        response = client.get(url)
-        _logger.debug("AAAAAAAAAAAAAAAA", response.status_code, len(response.content))
-        response.raise_for_status()
-
     return url
 
 
