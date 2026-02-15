@@ -1,0 +1,21 @@
+services:
+  agservice-storage:
+    build: .
+    ports:
+      - "10101:8000"
+    environment:
+      S3_ENDPOINT_URL: ${S3_ENDPOINT_URL}
+      S3_ACCESS_KEY: ${S3_ACCESS_KEY}
+      S3_SECRET_KEY: ${S3_SECRET_KEY}
+      S3_BUCKET_NAME: ${S3_BUCKET_NAME}
+      S3_BUCKET_NAME_STAGE: ${S3_BUCKET_NAME_STAGE}
+      S3_REGION: ${S3_REGION}
+      KEYCLOAK_URL: ${KEYCLOAK_URL}
+      KEYCLOAK_REALM: ${KEYCLOAK_REALM}
+      #KEYCLOAK_AUDIENCE: ""
+      SQL_TYPE: ${SQL_TYPE}
+      SQL_HOST: ${SQL_HOST}
+      SQL_PORT: ${SQL_PORT}
+      SQL_USER: ${SQL_USER}
+      SQL_PASSWORD: ${SQL_PASSWORD}
+      SQL_DB: ${SQL_DB}
