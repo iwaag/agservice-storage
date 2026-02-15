@@ -35,26 +35,8 @@ from services.s3 import (
 import services.s3
 import os
 
-tags_metadata = [
-    {
-        "name": "Static Object",
-        "description": "Endpoints for generating presigned URLs to upload/download static objects.",
-    },
-    {
-        "name": "Dynamic Object",
-        "description": "Endpoints for creating dynamic object groups and generating presigned URLs to upload/download dynamic objects.",
-    },
-    {
-        "name": "Webhook",
-        "description": "Endpoints for receiving webhooks from external services.",
-    },
-]
-
 app = FastAPI(
-    title="agservice-storage",
-    description="Storage service for agdev. Manages presigned URL generation and object lifecycle on S3-compatible storage.",
-    version="0.1.1",
-    openapi_tags=tags_metadata,
+    title="agservice-storage"
 )
 app.add_middleware(
     CORSMiddleware,
@@ -73,9 +55,7 @@ async def http_exception_handler(request: Request, exc: HTTPException):
     "/static_object/upload",
     tags=["Static Object"],
     summary="Get presigned upload URL for a static object",
-    response_class=PlainTextResponse,
     responses={
-        200: {"description": "Presigned upload URL", "content": {"text/plain": {"schema": {"type": "string"}}}},
         403: {"description": "Write access denied for the domain"},
     },
 )
@@ -93,11 +73,7 @@ def get_static_object_upload_url(
     "/static_object/download",
     tags=["Static Object"],
     summary="Get presigned download URL for a static object",
-    description="Generate a presigned GET URL for downloading a static object from S3. "
-    "The caller must have read access to the specified domain.",
-    response_class=PlainTextResponse,
     responses={
-        200: {"description": "Presigned download URL", "content": {"text/plain": {"schema": {"type": "string"}}}},
         403: {"description": "Read access denied for the domain"},
     },
 )
@@ -114,10 +90,7 @@ def get_static_object_download_url(
 @app.post(
     "/dynamic_object/new_group",
     tags=["Dynamic Object"],
-    summary="Create a new dynamic object group",
-    responses={
-        200: {"description": "UUID of the created group", "content": {"application/json": {"schema": {"type": "string", "format": "uuid"}}}},
-    },
+    summary="Create a new dynamic object group"
 )
 def get_static_resource(
     request: NewDynamicObjectGroupRequest,
@@ -131,11 +104,7 @@ def get_static_resource(
 @app.post(
     "/dynamic_object/upload",
     tags=["Dynamic Object"],
-    summary="Get presigned upload URL for a dynamic object",
-    response_class=PlainTextResponse,
-    responses={
-        200: {"description": "Presigned upload URL", "content": {"text/plain": {"schema": {"type": "string"}}}},
-    },
+    summary="Get presigned upload URL for a dynamic object"
 )
 def get_dynamic_object_upload_url(
     ref: DynamicObjectRef,
@@ -148,11 +117,7 @@ def get_dynamic_object_upload_url(
 @app.post(
     "/dynamic_object/download",
     tags=["Dynamic Object"],
-    summary="Get presigned download URL for a dynamic object",
-    response_class=PlainTextResponse,
-    responses={
-        200: {"description": "Presigned download URL", "content": {"text/plain": {"schema": {"type": "string"}}}},
-    },
+    summary="Get presigned download URL for a dynamic object"
 )
 async def get_dynamic_object_download_url(
     ref: DynamicObjectRef,
