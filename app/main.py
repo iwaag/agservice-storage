@@ -67,15 +67,12 @@ app.add_middleware(
 @app.exception_handler(HTTPException)
 async def http_exception_handler(request: Request, exc: HTTPException):
     logging.error(f"caught exception: {exc.detail}", exc_info=True)
-    print(f"caught exception: {exc}")
     return exc
 
 @app.post(
     "/static_object/upload",
     tags=["Static Object"],
     summary="Get presigned upload URL for a static object",
-    description="Generate a presigned PUT URL for uploading a static object to S3. "
-    "The caller must have write access to the specified domain.",
     response_class=PlainTextResponse,
     responses={
         200: {"description": "Presigned upload URL", "content": {"text/plain": {"schema": {"type": "string"}}}},
@@ -118,8 +115,6 @@ def get_static_object_download_url(
     "/dynamic_object/new_group",
     tags=["Dynamic Object"],
     summary="Create a new dynamic object group",
-    description="Create a new dynamic object group and upload its manifest to S3. "
-    "Returns the UUID of the newly created group.",
     responses={
         200: {"description": "UUID of the created group", "content": {"application/json": {"schema": {"type": "string", "format": "uuid"}}}},
     },
@@ -137,8 +132,6 @@ def get_static_resource(
     "/dynamic_object/upload",
     tags=["Dynamic Object"],
     summary="Get presigned upload URL for a dynamic object",
-    description="Generate a presigned PUT URL for uploading a dynamic object to S3 "
-    "within an existing dynamic object group.",
     response_class=PlainTextResponse,
     responses={
         200: {"description": "Presigned upload URL", "content": {"text/plain": {"schema": {"type": "string"}}}},
@@ -156,8 +149,6 @@ def get_dynamic_object_upload_url(
     "/dynamic_object/download",
     tags=["Dynamic Object"],
     summary="Get presigned download URL for a dynamic object",
-    description="Generate a presigned GET URL for downloading a dynamic object from S3 "
-    "within an existing dynamic object group.",
     response_class=PlainTextResponse,
     responses={
         200: {"description": "Presigned download URL", "content": {"text/plain": {"schema": {"type": "string"}}}},
@@ -174,22 +165,7 @@ async def get_dynamic_object_download_url(
 @app.post(
     "/webhook/minio",
     tags=["Webhook"],
-    summary="Receive MinIO event notification",
-    description="Webhook endpoint that receives event notifications from MinIO. "
-    "Accepts a raw JSON payload and logs the event.",
-    responses={
-        200: {
-            "description": "Webhook processing result",
-            "content": {"application/json": {"schema": {
-                "type": "object",
-                "properties": {
-                    "ok": {"type": "boolean"},
-                    "reason": {"type": "string"},
-                },
-                "required": ["ok"],
-            }}},
-        },
-    },
+    summary="Receive MinIO event notification"
 )
 async def minio_webhook(request: Request):
     raw = await request.body()
