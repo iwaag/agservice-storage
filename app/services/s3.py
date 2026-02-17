@@ -1,5 +1,3 @@
-"""S3 helper functions for presigned URLs and listing keys."""
-
 from __future__ import annotations
 
 import logging
@@ -93,8 +91,6 @@ def check_object_exists(key: str, storage: ObjectStorage) -> bool:
     client = get_s3_client(storage)
     try:
         head = client.head_object(Bucket=storage.bucket, Key=key)
-        if head:
-            _logger.debug("Object exists: ", head.get("ETag"), head.get("LastModified"), head.get("ContentLength"), head.get("ContentType"))
         return True
     except client.exceptions.ClientError as e:
         if e.response["Error"]["Code"] == "404":

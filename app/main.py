@@ -5,7 +5,7 @@ from typing import Annotated, Optional, Tuple
 from dataclasses import dataclass
 
 logging.basicConfig(
-    level=logging.DEBUG,
+    level=logging.INFO,
     format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
     stream=sys.stderr,
 )
@@ -140,6 +140,6 @@ async def minio_webhook(request: Request):
         print("Invalid JSON payload")
         return {"ok": False, "reason": "invalid json"}
 
-    print("MinIO webhook payload: %s", payload)
+    logging.infos("MinIO webhook payload: %s", payload)
     return {"ok": True}
 

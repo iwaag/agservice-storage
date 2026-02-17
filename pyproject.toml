@@ -2,10 +2,16 @@
 name = "agservice-storage"
 version = "0.1.0"
 description = "storage service for agdev"
-authors = [
-    {name = "Your Name"}
-]
+authors = [{ name = "Your Name" }]
 requires-python = ">=3.10"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+]
 dependencies = [
     "boto3",
     "fastapi",
@@ -15,10 +21,9 @@ dependencies = [
     "sqlmodel",
     "psycopg2-binary",
     "uuid6",
-    "agpyutils @ git+https://github.com/iwaag/agpyutils.git"
+    "agpyutils @ git+https://github.com/iwaag/agpyutils.git",
 ]
 
-
 [build-system]
-requires = ["poetry-core>=2.0.0,<3.0.0"]
-build-backend = "poetry.core.masonry.api"
+requires = ["uv_build>=0.10.3,<0.11.0"]
+build-backend = "uv_build"

@@ -4,6 +4,7 @@ services:
     ports:
       - "10101:8000"
     environment:
+      PRODUCT_ENV: ${PRODUCT_ENV}
       S3_ENDPOINT_URL: ${S3_ENDPOINT_URL}
       S3_ACCESS_KEY: ${S3_ACCESS_KEY}
       S3_SECRET_KEY: ${S3_SECRET_KEY}
