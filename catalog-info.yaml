@@ -1,0 +1,28 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: agservice-storage
+  title: Storage Service
+  description: >
+    S3-compatible object storage wrapper that enforces per-service access
+    control (domain isolation) and provides abstract presigned URLs for
+    uploading and downloading files. Supports both static objects (path
+    determined by domain/project/user) and dynamic object groups (runtime
+    prefix managed by the service itself).
+  tags:
+    - storage
+    - s3
+    - python
+    - fastapi
+  annotations:
+    backstage.io/techdocs-ref: dir:.
+spec:
+  type: service
+  lifecycle: experimental
+  owner: iwaag
+  system: agdev
+
+  dependsOn:
+    - resource:default/minio-s3
+    - resource:default/postgresql
+    - component:default/keycloak
